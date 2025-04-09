@@ -1,0 +1,41 @@
+import pandas as pd
+import numpy as np
+
+# Set the random seed for reproducibility
+np.random.seed(42)
+
+# Create lists for years and months
+years = []
+months = []
+values1 = []
+values2 = []
+values3 = []
+
+# Generate data for each year
+for year in range(2021, 2025):
+    for month in range(1, 13):
+        years.append(year)
+        months.append(month)
+        values1.append(200)  # Constant value for the first column
+        values2.append(np.random.randint(10, 100))  # Random values between 10 and 100
+        values3.append(np.round(np.random.uniform(1, 10), 1))  # Random floats between 1 and 10
+
+# Create a DataFrame
+data = {
+    'year': years,
+    'month': months,
+    'category': values1,
+    'number': values2,
+    'unemployment': values3
+}
+
+df = pd.DataFrame(data)
+
+# Define the output folder and file name
+output_folder = r"C:\Users\Lenovo\OneDrive\Documents\Opiskelu\Unemploymentmodel"
+output_file = f"{output_folder}\\random_test_data_2021_2024.xlsx"
+
+# Write to Excel
+df.to_excel(output_file, index=False)
+
+print(f"Data written to {output_file}")

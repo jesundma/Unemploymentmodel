@@ -32,7 +32,7 @@ if uploaded_file:
 
     # Forecast settings
     forecast_year = st.slider("Forecast Year", 2025, 2030, 2025)
-    forecast_months = st.multiselect("Select Months to Forecast", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], default=[1, 2, 3, 4])
+    forecast_months = st.multiselect("Select Months to Forecast", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], default=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 
     st.subheader("📉 Monthly Unemployment Rate (for Forecast)")
     future_unemployment = {}
@@ -111,7 +111,7 @@ if uploaded_file:
     output = pd.ExcelWriter("forecast_output.xlsx", engine='xlsxwriter')
     df_rf.to_excel(output, sheet_name="RandomForest", index=False)
     df_prophet.to_excel(output, sheet_name="Prophet", index=False)
-    output.save()
+    output.close()
 
     with open("forecast_output.xlsx", "rb") as f:
-        st.download_button("Download Excel File", f, file_name="forecast_output.xlsx", mime="application/vnd.ms-excel")
+        st.download_button("Download Excel File", f, file_name="forecast_output.xlsx", mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")

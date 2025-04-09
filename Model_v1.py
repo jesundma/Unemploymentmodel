@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.ensemble import RandomForestRegressor
-from prophet import Prophet  # Prophet is now included again
+from prophet import Prophet
 from datetime import datetime
 import streamlit as st
 
@@ -76,6 +76,11 @@ if uploaded_file:
         forecast["month"] = forecast["ds"].dt.month
         forecast["year"] = forecast["ds"].dt.year
         forecast["category"] = cat
+
+        # Ensure forecasts are not negative
+        forecast["yhat"] = forecast["yhat"].clip(lower=0)  # Set negative forecasts to zero
+        forecast["yhat_lower"] = forecast["yhat_lower"].clip(lower=0)  # Set lower bounds to zero
+        forecast["yhat_upper"] = forecast["yhat_upper"].clip(lower=0)  # Set upper bounds to zero
 
         prophet_results.append(forecast[["year", "month", "category", "yhat", "yhat_lower", "yhat_upper"]])
 
